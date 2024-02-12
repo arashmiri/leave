@@ -14,7 +14,7 @@ class Vacation extends Model
 
     protected $guarded = [];
 
-    public function Personnel(): BelongsTo
+    public function personnel(): BelongsTo
     {
         return $this->belongsTo(Personnel::class);
     }

@@ -14,7 +14,7 @@ class VacationController extends Controller
 
         $personnel = Personnel::find($id);
 
-        $vacations = Personnel::find($id)->vacations()->orderBy('id' , 'DESC')->get();;
+        $vacations = Personnel::find($id)->vacations()->orderBy('id' , 'DESC')->get();
 
         return view('personnel.vacation' , compact('vacations' , 'personnel'));
     }
@@ -54,23 +54,6 @@ class VacationController extends Controller
 
         $vacation->entitlement = $request->entitlement;
 
-        //check if used encouragement 
-        // if ( !empty ( $request->encouragement )  ) 
-        // {
-        //     if( empty($request->encouragementDescription) )
-        //     {
-        //         dd('encouragementDescription is empty');
-        //     }
-        // }
-
-        // if ( !empty ( $request->encouragementDescription )  ) 
-        // {
-        //     if( empty($request->encouragement) )
-        //     {
-        //         dd('encouragement is empty');
-        //     }
-        // }
-
         if(isset($request->encouragement))
         {
 
@@ -80,22 +63,20 @@ class VacationController extends Controller
                 $value = Encouragement::find($encouragement);
 
                 $vacation->encouragement = $value->days + $vacation->encouragement; 
+                $vacation->encouragementDescription = $value->title . "-" . $vacation->encouragementDescription; 
 
-                $value->delete();
+                $personnel->encouragements()->detach();
             }
         }
 
        
         //check if used distance 
-        if( isset($request->distance))
-        {
-            if($personnel->useddistance < 2){
+
+            if($personnel->useddistance < 2)
+            {
                 $vacation->distance = $personnel->distance;
                 $personnel->useddistance = $personnel->useddistance + 1 ;
-            }else{
-                dd('استفاده از بعد مسافت این پرسنل به حد نصاب رسیده');
             }
-        }
 
 
         $vacation->personnel_id = $request->personnel_id ;

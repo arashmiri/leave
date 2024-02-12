@@ -158,7 +158,7 @@ class PersonnelController extends Controller
         $personnel->entitlement = $request['entitlement'];
         $personnel->distance = $request['distance'];
         $personnel->address = $request['address'];
-        $personnel->image = 'LFV' . $request['personnel_code'] . '.png';
+        $personnel->image = 'LF' . $request['personnel_code'] . '.png';
      
         $personnel->save();
         

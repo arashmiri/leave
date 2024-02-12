@@ -7,9 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>سامانه ثبت مرخصی پایوران</title>
   <link rel="stylesheet" href="{{ url('/css/output.css') }}" />
+  @vite('resources/css/app.css')
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-blue-600">
   <div>
     <div class="flex items-center justify-between h-20 px-10 shadow-lg">
       <div class="flex items-center space-x-2 space-x-reverse">

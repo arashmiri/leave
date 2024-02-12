@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     public function isAdministrator()
     {
-        if($this->email === 'fakemail@fake.com')
+        if($this->email === 'fake@mail.com')
         {
             return true;
         }
