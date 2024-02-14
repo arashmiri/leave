@@ -65,7 +65,7 @@ class VacationController extends Controller
                 $vacation->encouragement = $value->days + $vacation->encouragement; 
                 $vacation->encouragementDescription = $value->title . "-" . $vacation->encouragementDescription; 
 
-                $personnel->encouragements()->detach();
+                $personnel->encouragements()->detach($encouragement);
             }
         }
 
