@@ -58,7 +58,7 @@ class PersonnelController extends Controller
         $personnel->entitlement = $request['entitlement'];
         //$personnel->distance = $request['distance'];
         //$personnel->address = $request['address'];
-        $personnel->image = 'LF' . $request['personnel_code'] . '.png';
+        $personnel->image = 'LF' . $request['personnel_code'] . '.jpg';
 
         $province = Province::where('name', $request['address'])->first();
 
@@ -158,7 +158,7 @@ class PersonnelController extends Controller
         $personnel->entitlement = $request['entitlement'];
         $personnel->distance = $request['distance'];
         $personnel->address = $request['address'];
-        $personnel->image = 'LF' . $request['personnel_code'] . '.png';
+        $personnel->image = 'LF' . $request['personnel_code'] . '.jpg';
      
         $personnel->save();
         

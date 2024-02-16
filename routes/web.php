@@ -4,7 +4,6 @@ use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EncouragementController;
 use App\Http\Controllers\VacationController;
-use App\Http\Controllers\StatisticController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -57,11 +56,52 @@ Route::get('/personnels/{id}/encouragement' , [EncouragementController::class, '
 
 Route::delete('/encouragement/{id}', [EncouragementController::class, 'destroy'])->name('encouragement.destroy');
 
-Route::get('/statistics', [StatisticController::class, 'index'])->name('statistics.index');
+// Route::get('/encouragement', function () {
 
-Route::post('/statistics', [StatisticController::class,'ends'])->name('statistics.ends');
+//     $personel = App\Models\Personnel::find(5);
 
-Route::post('/statisticss', [StatisticController::class,'attendance'])->name('statistics.attendance');
+//     $encouragements = $personel->encouragements()->orderBy('created_at', 'desc')->get();
+
+//     foreach ($encouragements as $encouragement) 
+//     {
+//         echo "title : " . $encouragement->title; 
+//         echo '<br>';
+//         echo "days : " . $encouragement->days;
+//         echo '<br>';
+//     }
+// });
+
+//  Route::get('/encouragementBrigade', function () {
+
+//     $encouragements = App\Models\Encouragement::with('personnel')->get();
+//     $encouragementsWithAllPersonnel = $encouragements->filter(function($encouragement) {
+//         return $encouragement->personnel->count() > 1;
+//     });
+    
+//     foreach ($encouragementsWithAllPersonnel as $encouragement) {
+
+//         echo $encouragement->title;
+//         echo '<br>';
+//         echo $encouragement->id;
+//         echo '<br>';
+
+//     }
+//  });
+
+//  Route::get('/encouragementDel', function () {
+
+//     $encouragement = App\Models\Encouragement::find(18);
+
+//     $encouragement->personnel()->detach();
+
+//     // Delete the encouragement
+//     $encouragement->delete();
+
+//     // Return a JSON response with a success message
+//     return response()->json([
+//         'message' => 'مرخصی تشویقی با موفقیت حذف شد',
+//     ]);
+//  });
 
 
 require __DIR__.'/auth.php';

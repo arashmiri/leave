@@ -6,7 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>سامانه ثبت مرخصی پایوران</title>
-  <link rel="stylesheet" href="{{ url('/css/output.css') }}" />
+  <link rel="stylesheet" href="{{ url('/css/flowbite.min.css') }}" />
+  <!-- <link rel="stylesheet" href="{{ url('/css/output.css') }}" /> -->
+  @vite('resources/css/app.css')
   <script src="{{ url('/js/datepicker.min.js') }}"></script>
   <script src="{{ url('/js/flowbite.min.js') }}"></script>
 </head>
@@ -15,101 +17,113 @@
   <div>
     <div class="flex items-center justify-between h-20 px-10 shadow-lg">
       <p class="font-medium text-lg">سامانه ثبت مرخصی پایوران</p>
-      <a href="./" class="bg-white rounded-full p-2 shadow-lg">
-        <img src="{{ url('/images/logo.png') }}" alt="logo" class="w-12" />
+      <a href="{{ route('personnels.index') }}" class="bg-white rounded-full p-2 shadow-lg">
+        <img src="{{ url('/images/logo.png') }}" alt="" class="w-12" />
       </a>
     </div>
 
     <div class="my-8 max-w-7xl m-auto">
       <div class="flex flex-col space-y-6">
         <div class="flex items-center justify-between space-x-3 space-x-reverse">
-          <div class="flex items-center">
-            <a href="./">
+          <div class="flex items-center space-x-3 space-x-reverse">
+            <a href="{{ route('personnels.index') }}">
               <span class="text-lg">صفحه اصلی</span>
             </a>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
               stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
             </svg>
-            <a href="#">
+            <a href="">
               <span class="font-semibold text-lg">مشاهده اطلاعات پایور</span>
             </a>
           </div>
 
           <div class="flex items-center space-x-3 space-x-reverse">
-
-            <a href="{{route('personnel.encouragement' , $personnel->id)}}"
-              class="flex items-center justify-center 
-              bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-green-400 to-green-700 text-white w-24 h-10 rounded-md cursor-pointer">
-              <span>مرخصی های تشویقی</span>
+            <a href="{{url("/personnels/$personnel->id/vacation")}} "  
+              class="flex items-center justify-center text-md bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-green-500 to-green-600 text-white w-36 h-10 rounded-md cursor-pointer">
+                تاریخچه مرخصی ها
             </a>
-
             <a href="{{route('personnels.edit' , $personnel->id)}}"
-              class="flex items-center justify-center 
-              bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-orange-400 to-orange-700 text-white w-24 h-10 rounded-md cursor-pointer">
-              <span>ویرایش</span>
+              class="flex items-center justify-center
+              bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-orange-400 to-orange-700 text-white w-24 h-10 rounded-md text-md cursor-pointer">
+                ویرایش
             </a>
 
             <form action="{{route('personnels.destroy' , $personnel->id)}}" method="post">
                 @csrf
                 @method('DELETE')
+                <button type="button" data-modal-target="popup-modal" data-modal-toggle="popup-modal" 
+                    class="flex items-center justify-center text-md outline-none
+                    bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-red-500 to-red-800 text-white w-24 h-10 rounded-md cursor-pointer">
+                  حذف کاربر
+                </button>
 
-            <a href=""
-                class="flex items-center justify-center 
-                bg-[conic-gradient(at_left,_var(--tw-gradient-stops))]  text-red w-24 h-10 rounded-md cursor-pointer">
-                <input type="submit" value="حذف کاربر">
-            </a>
-
+                <div id="popup-modal" tabindex="-1" style="background-color: rgb(0 0 0 / 0.4);" class="hidden h-full overflow-y-auto overflow-x-hidden fixed top-0 left-0 z-50 justify-center items-center w-full md:inset-0 max-h-full">
+                    <div class="relative p-4 w-full max-w-md max-h-full">
+                        <div class="p-4 relative bg-white rounded-lg shadow dark:bg-gray-700">
+                            <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                </svg>
+                                <span class="sr-only">بستن</span>
+                            </button>
+                            <div class="p-4 md:p-5 text-center">
+                                <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                </svg>
+                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">این کاربر بصورت کامل از سامانه حذف شود؟</h3>
+                                <button type="submit" data-modal-hide="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                                     حذف
+                                </button>
+                                <button data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">انصراف</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
-
-            <a href="{{ url("/personnels/$personnel->id/vacation") }}" class="flex items-center justify-center 
-            bg-gradient-to-r from-green-400 to-green-500 text-white w-36 h-10 rounded-md cursor-pointer">
-              <span>تاریخچه مرخصی ها</span>
-            </a>
           </div>
-
         </div>
 
         <div class="container w-full rounded-lg shadow-lg p-10 py-8 bg-white space-y-8">
           <div class="container-header flex items-center space-x-6 space-x-reverse">
             <div>
-              <img src="./images/user.jpg" alt="logo" class="rounded-full shadow-xl border-2 w-44 h-44" />
+              <img src="{{ asset("storage/$personnel->image"); }}" alt="" class="rounded-full shadow-xl border-2 w-44 h-44 bg-contain" />
             </div>
 
             <div class="flex flex-col space-y-3">
               <span class="font-bold text-2xl">{{$personnel->name}}</span>
-              <span class="text-lg"> درجه : {{$personnel->rank}}</span>
+              <span class="text-lg">درجه: {{$personnel->rank}}</span>
             </div>
           </div>
 
-          <div class="container-body grid grid-cols-5 gap-8">
-            <div class="flex flex-col items-center justify-center w-48 h-20 bg-gray-100 space-y-2 rounded-md shadow-lg">
-              <span class="font-semibold">شماره کارگزینی:</span>
+          <div class="container-body grid grid-cols-4 gap-12">
+            <div class="flex flex-col items-center justify-center w-60 h-24 bg-gray-100 space-y-2 rounded-md shadow-lg">
+              <span class="text-lg font-semibold">شماره کارگزینی:</span>
               <span class="text-lg">{{$personnel->personnel_code}}</span>
             </div>
 
-            <div class="flex flex-col items-center justify-center w-48 h-20 bg-gray-100 space-y-2 rounded-md shadow-lg">
-              <span class="font-semibold">استحقاق باقی مانده:</span>
+            <div class="flex flex-col items-center justify-center w-60 h-24 bg-gray-100 space-y-2 rounded-md shadow-lg">
+              <span class="text-lg font-semibold">استحقاق باقی مانده:</span>
               <span class="text-lg">{{$personnel->entitlement}}</span>
             </div>
 
-            <div class="flex flex-col items-center justify-center w-48 h-20 bg-gray-100 space-y-2 rounded-md shadow-lg">
-              <span class="font-semibold">گردان :</span>
+            <div class="flex flex-col items-center justify-center w-60 h-24 bg-gray-100 space-y-2 rounded-md shadow-lg">
+              <span class="text-lg font-semibold">یگان مربوطه:</span>
               <span class="text-lg">{{$personnel->battalion}}</span>
             </div>
 
-            <div class="flex flex-col items-center justify-center w-48 h-20 bg-gray-100 space-y-2 rounded-md shadow-lg">
-              <span class="font-semibold">محاسبه بعد مسافت:</span>
-              <span class="text-lg">{{$personnel->distance}}</span>
+            <div class="flex flex-col items-center justify-center w-60 h-24 bg-gray-100 space-y-2 rounded-md shadow-lg">
+              <span class="text-lg font-semibold">محاسبه بعد مسافت:</span>
+              <span class="text-lg">{{$personnel->distance}} روز</span>
             </div>
 
-            <div class="flex flex-col items-center justify-center w-52 h-20 bg-gray-100 space-y-2 rounded-md shadow-lg">
-              <span class="font-semibold">استفاده از بعد مسافت:</span>
-              <span class="text-lg">{{$personnel->useddistance}}</span>
+            <div class="flex flex-col items-center justify-center w-60 h-24 bg-gray-100 space-y-2 rounded-md shadow-lg">
+              <span class="text-lg font-semibold">استفاده از بعد مسافت:</span>
+              <span class="text-lg">{{$personnel->useddistance}} مرتبه</span>
             </div>
 
-            <div class="flex flex-col items-center justify-center w-72 h-20 bg-gray-100 space-y-2 rounded-md shadow-lg">
-              <span class="font-semibold">آدرس:</span>
+            <div class="flex flex-col items-center justify-center w-60 h-24 bg-gray-100 space-y-2 rounded-md shadow-lg">
+              <span class="text-lg font-semibold">استان محل سکونت:</span>
               <span class="text-lg">{{$personnel->address}}</span>
             </div>
           </div>
@@ -117,135 +131,14 @@
 
         <div class="flex items-center justify-end">
           <div class="flex space-x-4 space-x-reverse">
-            <a href="./" class="flex items-center justify-center 
-              bg-gradient-to-r from-red-500 to-red-700 text-white w-28 h-10 rounded-md cursor-pointer">
+            <a href="{{ route('personnels.index') }}" class="flex items-center justify-center 
+            bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-red-600 to-orange-600 text-white w-28 h-10 rounded-md cursor-pointer">
               <span>بازگشت</span>
             </a>
           </div>
         </div>
       </div>
     </div>
-
-
-    <!-- <script>
-      async function fetchUserData() {
-        try {
-          const response = await fetch('http://leave.test/api/personnels/1');
-          const users = await response.json();
-          return users.data;
-
-        } catch (error) {
-          console.error('Error fetching data:',error)
-        }
-      }
-
-      async function renderData() {
-        const containerHeader = document.querySelector('.container-header')
-        const containerBody = document.querySelector('.container-body')
-        const data = await fetchUserData();
-        console.log(data)
-
-        if(!data){
-          return
-        }
-
-        // data.forEach(item => {
-          const containerHeaderImage = document.createElement('div')
-          const headerImage = document.createElement('img')
-          headerImage.classList.add('rounded-full','shadow-xl','border-2','w-44','h-44')
-          // headerImage.src = data.image
-          const containerHeaderName = document.createElement('div')
-          containerHeaderName.classList.add('flex','flex-col','space-y-3')
-          const HeaderName = document.createElement('span')
-          HeaderName.classList.add('font-bold','text-2xl')
-          HeaderName.textContent = `${data.name}`
-          const HeaderRank = document.createElement('span')
-          HeaderRank.classList.add('text-lg')
-          HeaderRank.textContent = `درجه: ${data.rank}`
-          
-          //personnelCode
-          const containerBodyPersonnelCode = document.createElement('div')
-          containerBodyPersonnelCode.classList.add('flex','flex-col','items-center','justify-center','w-48','h-20','bg-gray-100','space-y-2','rounded-md','shadow-lg')
-          const personnelCodeLabel = document.createElement('span')
-          personnelCodeLabel.classList.add('font-semibold')
-          personnelCodeLabel.textContent = "شماره کارگزینی:"
-          const personnelCode = document.createElement('span')
-          personnelCode.classList.add('text-lg')
-          personnelCode.textContent = `${data.personnel_code}`
-
-          //entitlement
-          const containerBodyEntitlement = document.createElement('div')
-          containerBodyEntitlement.classList.add('flex','flex-col','items-center','justify-center','w-48','h-20','bg-gray-100','space-y-2','rounded-md','shadow-lg')
-          const entitlementLabel = document.createElement('span')
-          entitlementLabel.classList.add('font-semibold')
-          entitlementLabel.textContent = "استحقاق باقی مانده:"
-          const entitlement = document.createElement('span')
-          entitlement.classList.add('text-lg')
-          entitlement.textContent = `${data.entitlement}`
-
-          //distance
-          const containerBodyDistance = document.createElement('div')
-          containerBodyDistance.classList.add('flex','flex-col','items-center','justify-center','w-48','h-20','bg-gray-100','space-y-2','rounded-md','shadow-lg')
-          const distanceLabel = document.createElement('span')
-          distanceLabel.classList.add('font-semibold')
-          distanceLabel.textContent = "محاسبه بعد مسافت:"
-          const distance = document.createElement('span')
-          distance.classList.add('text-lg')
-          distance.textContent = `${data.distance}`
-
-          //useddistance
-          const containerBodyUseddistance = document.createElement('div')
-          containerBodyUseddistance.classList.add('flex','flex-col','items-center','justify-center','w-48','h-20','bg-gray-100','space-y-2','rounded-md','shadow-lg')
-          const useddistanceLabel = document.createElement('span')
-          useddistanceLabel.classList.add('font-semibold')
-          useddistanceLabel.textContent = "استفاده از بعد مسافت:"
-          const useddistance = document.createElement('span')
-          useddistance.classList.add('text-lg')
-          useddistance.textContent = `${data.useddistance}`
-
-          //address
-          const containerBodyAddress = document.createElement('div')
-          containerBodyAddress.classList.add('flex','flex-col','items-center','justify-center','w-48','h-20','bg-gray-100','space-y-2','rounded-md','shadow-lg')
-          const addressLabel = document.createElement('span')
-          addressLabel.classList.add('font-semibold')
-          addressLabel.textContent = "آدرس:"
-          const address = document.createElement('span')
-          address.classList.add('text-lg')
-          address.textContent = `${data.address}`
-
-          containerHeaderImage.appendChild(headerImage)
-          containerHeader.appendChild(containerHeaderImage)
-          containerHeaderName.appendChild(HeaderName)
-          containerHeaderName.appendChild(HeaderRank)
-          containerHeader.appendChild(containerHeaderName)
-
-          // containerHeaderImage.appendChild(headerImage)
-          // containerHeader.appendChild(containerHeaderImage)
-          containerBodyPersonnelCode.appendChild(personnelCodeLabel)
-          containerBodyPersonnelCode.appendChild(personnelCode)
-          containerBody.appendChild(containerBodyPersonnelCode)
-
-          containerBodyEntitlement.appendChild(entitlementLabel)
-          containerBodyEntitlement.appendChild(entitlement)
-          containerBody.appendChild(containerBodyEntitlement)
-
-          containerBodyDistance.appendChild(distanceLabel)
-          containerBodyDistance.appendChild(distance)
-          containerBody.appendChild(containerBodyDistance)
-
-          containerBodyUseddistance.appendChild(useddistanceLabel)
-          containerBodyUseddistance.appendChild(useddistance)
-          containerBody.appendChild(containerBodyUseddistance)
-
-          containerBodyAddress.appendChild(addressLabel)
-          containerBodyAddress.appendChild(address)
-          containerBody.appendChild(containerBodyAddress)
-        // });
-      }
-
-      renderData()
-    </script> -->
-
 </body>
 
 </html>

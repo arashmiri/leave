@@ -14,7 +14,7 @@ class VacationController extends Controller
 
         $personnel = Personnel::find($id);
 
-        $vacations = Personnel::find($id)->vacations()->orderBy('id' , 'DESC')->get();
+        $vacations = Personnel::find($id)->vacations()->orderBy('id' , 'DESC')->get();;
 
         return view('personnel.vacation' , compact('vacations' , 'personnel'));
     }
@@ -54,6 +54,23 @@ class VacationController extends Controller
 
         $vacation->entitlement = $request->entitlement;
 
+        //check if used encouragement 
+        // if ( !empty ( $request->encouragement )  ) 
+        // {
+        //     if( empty($request->encouragementDescription) )
+        //     {
+        //         dd('encouragementDescription is empty');
+        //     }
+        // }
+
+        // if ( !empty ( $request->encouragementDescription )  ) 
+        // {
+        //     if( empty($request->encouragement) )
+        //     {
+        //         dd('encouragement is empty');
+        //     }
+        // }
+
         if(isset($request->encouragement))
         {
 
@@ -65,7 +82,7 @@ class VacationController extends Controller
                 $vacation->encouragement = $value->days + $vacation->encouragement; 
                 $vacation->encouragementDescription = $value->title . "-" . $vacation->encouragementDescription; 
 
-                $personnel->encouragements()->detach($encouragement);
+                $personnel->encouragements()->detach();
             }
         }
 

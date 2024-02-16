@@ -1,51 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="{{ url('/css/output.css') }}" />
-  <title>ثبت مرخصی</title>
-</head>
-<body>
-
-    <p> ثبت مرخصی برای :{{ $personnel->rank }} {{ $personnel->name }}</p>
-    <p> استحقاق باقی مانده :  {{ $personnel->entitlement }}</p>
-    <p> کد کار گزینی :  {{ $personnel->personnel_code }}</p>
-
-    <form action="{{route('vacation.store')}}" method="POST">
-        @csrf
-
-        <label class="text-red-500">تاریخ رفت :</label><br>
-        <input type="date" id="" name="start"><br>
-
-        <label class="text-red-500">تاریخ پایان :</label><br>
-        <input type="date" id="" name="end"><br>
-
-        <label >تاریخ حضور :</label><br>
-        <input type="date" id="" name="attendance"><br>
-
-        <label >استحقاق :</label><br>
-        <input type="number" id="" name="entitlement"><br>
-
-        <label >تشویقی :</label><br>
-        <input type="number" id="" name="encouragement"><br>
-        
-        <label >در صورت ثبت مرخصی تشویقی علت آن را در کادر زیر بنویسید.</label><br>
-        <input type="text" id="" name="encouragementDescription"><br>
-
-        <label >استفاده از بعد مسافت </label><br>
-        <input type="checkbox" id="" name="distance"><br>
-
-        <input type="hidden" value="{{$personnel->id}}" name="PersonnelID">
-
-
-        <input type="submit">
-
-    </form>
-</body>
-</html> -->
-
 <!doctype html>
 <html lang="en" dir="rtl">
 
@@ -54,10 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>سامانه ثبت مرخصی پایوران</title>
-  <link rel="stylesheet" href="{{ url('/css/output.css') }}" />
+  <!-- <link rel="stylesheet" href="{{ url('/css/output.css') }}" /> -->
   <link rel="stylesheet" href="{{ url('/css/jalalidatepicker.min.css') }}" />
   <script src="{{ url('/js/jalalidatepicker.min.js') }}"></script>
   <script src="{{ url('/js/farvardin.min.js') }}"></script>
+  @vite('resources/css/app.css')
 </head>
 
 <body class="bg-gray-100">
@@ -65,16 +18,16 @@
     <div class="flex items-center justify-between h-20 px-10 shadow-lg">
       <p class="font-medium text-lg">سامانه ثبت مرخصی پایوران</p>
       <a href="./" class="bg-white rounded-full p-2 shadow-lg">
-        <img src="./images/logo.png" alt="logo" class="w-12" />
+      <img src="{{ url('/images/logo.png') }}" alt="logo" class="w-12" />
       </a>
     </div>
 
     <div class="my-8 max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-7xl m-auto">
       <form action="{{route('vacation.store')}}" method="POST" >
-        @csrf
+      @csrf
       <div class="flex flex-col space-y-6">
         <div class="flex space-x-3 space-x-reverse">
-          <a href="./">
+          <a href="{{ route('personnels.index') }}">
             <span class="text-lg">صفحه اصلی</span>
           </a>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -90,15 +43,31 @@
           <div class="flex flex-col items-start justify-center">
             <span class="text-xl font-bold">ثبت مرخصی برای:</span>
           </div>
-          <div class="flex items-center justify-start space-x-6 space-x-reverse my-6 text-lg">
-            <span>نام و نشان: {{ $personnel->name }} </span>
-            <span>درجه: {{ $personnel->rank }} </span>
-            <span> شماره کارگزینی :  {{ $personnel->personnel_code }}</span>
-            <span> استحقاق باقی مانده :  {{ $personnel->entitlement }}</span>
-            <span>این پرسنل تا این لحظه {{ $personnel->useddistance }} مرتبه از مرخصی توراهی استفاده کرده</span>
+          <div class="flex items-center justify-start space-x-10 space-x-reverse my-6 text-lg">
+            <div>
+              <span class="text-lg font-bold">نام و نشان:</span>
+              <span>{{ $personnel->name }} </span>
+            </div>
+            <div>
+              <span class="text-lg font-bold">درجه:</span>
+              <span>{{ $personnel->rank }} </span>
+            </div>
+            <div>
+              <span class="text-lg font-bold">شماره کارگزینی:</span>
+              <span>{{ $personnel->personnel_code }}</span>
+            </div>
+            <div>
+              <span class="text-lg font-bold">استحقاق باقی مانده :</span>
+              <span>{{ $personnel->entitlement }} روز</span>
+            </div>
+            <div id="distanceShow">
+              <span class="text-lg font-bold">استفاده از بعد مسافت:</span>
+              <span>{{ $personnel->useddistance }} مرتبه</span>
+            </div>
         </div>
           <div class="flex flex-col my-6">
-            <div class="flex space-x-6 space-x-reverse" style="margin-bottom:30px">
+            <div class="flex items-center space-x-6 space-x-reverse mb-8">
+
               <div class="relative">
                 <div class="absolute inset-y-0 start-0 flex items-center px-3 pointer-events-none">
                   <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -107,12 +76,14 @@
                       d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                   </svg>
                 </div>
-                <button class="absolute inset-y-0 left-0 text-sm bg-gray-500 text-white rounded-lg px-3 outline-none m-1">ثبت</button>
+                <!-- <button disabled class="absolute inset-y-0 left-0 text-sm bg-gray-500 text-white rounded-lg px-3 outline-none m-1">ثبت</button> -->
                 <input id="start" autocomplete="off" data-jdp name="start" type="text"
-                  class="bg-gray-50 shadow-lg text-gray-900 border-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-10"
+                  class="bg-gray-50 h-10 shadow-lg text-gray-900 border-[1px] border-gray-400 text-sm rounded-lg outline-none block w-full px-10"
                   placeholder="تاریخ رفت">
               </div>
+
               <span class="mx-4 text-gray-500 hidden lg:block">تا</span>
+              
               <div class="relative">
                 <div class="absolute inset-y-0 start-0 flex items-center px-3 pointer-events-none">
                   <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -121,9 +92,9 @@
                       d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                   </svg>
                 </div>
-                <button class="absolute inset-y-0 left-0 text-sm bg-gray-500 text-white rounded-lg px-3 outline-none m-1">ثبت</button>
+                <!-- <button disabled class="absolute inset-y-0 left-0 text-sm bg-gray-500 text-white rounded-lg px-3 outline-none m-1">ثبت</button> -->
                 <input id="end" autocomplete="off" data-jdp name="end" type="text"
-                  class="bg-gray-50 shadow-lg text-gray-900 border-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-10"
+                  class="bg-gray-50 h-10 shadow-lg text-gray-900 border-[1px] border-gray-400 text-sm rounded-lg outline-none block w-full px-10"
                   placeholder="تاریخ برگشت">
               </div>
 
@@ -135,78 +106,53 @@
                       d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                   </svg>
                 </div>
-                <button class="absolute inset-y-0 left-0 text-sm bg-gray-500 text-white rounded-lg px-3 outline-none m-1">ثبت</button>
+                <!-- <button disabled class="absolute inset-y-0 left-0 text-sm bg-gray-500 text-white rounded-lg px-3 outline-none m-1">ثبت</button> -->
                 <input id="start" autocomplete="off" data-jdp name="attendance" type="text"
-                  class="bg-gray-50 shadow-lg text-gray-900 border-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-10"
+                  class="bg-gray-50 h-10 shadow-lg text-gray-900 border-[1px] border-gray-400 text-sm rounded-lg outline-none block w-full px-10"
                   placeholder="تاریخ حضور">
               </div>
-
-              
-
-
-            <div id="show-text" class="flex items-center justify-center space-x-8 space-x-reverse">
-            </div>
+            <div id="show-text" class="flex items-center justify-center space-x-8 space-x-reverse"></div>
           </div>
-
             <div class="flex items-center">
               <div class="flex items-center space-x-6 space-x-reverse ml-6">
-
-              <div class=" items-center justify-center space-x-4 space-x-reverse">
-                <input class="entitlement w-64 bg-gray-50 border-1 shadow-lg text-gray-900 border-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+              <div class="hidden items-center justify-center space-x-4 space-x-reverse">
+                <input class="entitlement w-64 bg-gray-50 border-1 shadow-lg text-gray-900 border-[1px] border-gray-400 text-sm rounded-lgblock p-2.5"
                 type="number" id="" name="entitlement" placeholder=" استحقاق...">
               </div>
-
-              {{-- <div class="flex items-center justify-center space-x-4 space-x-reverse">
-                <input 
-                class="w-64 bg-gray-50 border-1 shadow-lg text-gray-900 border-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" 
-                type="number" id="encouragement" name="encouragement" placeholder=" تشویقی...">
-              </div>
-
-              <div class="flex items-center justify-center space-x-4 space-x-reverse">
-                <textarea name="encouragementDescription" id="message" rows="1"
-                  class="w-64 bg-gray-50 border-1 shadow-lg text-gray-900 border-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-                  placeholder="علت تشویقی..."></textarea>
-              </div> --}}
-
-              @foreach ($encouragements as $encouragement)
-                <input type="checkbox" id="" name="encouragement[]" value="{{$encouragement->id}}">
-                <label for="vehicle1">{{$encouragement->title}} {{$encouragement->days}} روز</label><br>
-              @endforeach
-
-
             </div>
+            <input type="checkbox" id="distance" name="distance" class="hidden">
 
             <input type="hidden" id="custId" name="personnel_id" value="{{$personnel->id}}">
+                @foreach ($encouragements as $encouragement)
+                  <div class="flex items-center space-x-2 space-x-reverse">
+                    <input id="encouragement" type="checkbox" id="" name="encouragement[]" value="{{$encouragement->id}}">
+                    <label for="vehicle1">{{$encouragement->title}} {{$encouragement->days}} روز</label>
+                  </div>
+                @endforeach
 
-            <button type="button" id="calculate"
-                  class="flex items-center justify-center
-                  bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-sky-400 to-blue-800 text-white w-36 h-10 rounded-md cursor-pointer focus:outline-none">
-                  <span>محاسبه تعداد روز</span>
-              </button>
+            </div>
           </div>
+          
         </div>
-
         <div class="flex items-center justify-between sm:justify-end space-x-4 space-x-reverse">
-          <a href="./" class="flex items-center justify-center 
-              bg-gradient-to-r from-red-500 to-red-700 text-white w-28 h-10 rounded-md cursor-pointer">
-            <span>بازگشت</span>
-          </a>
-          <a href="./leavePaper.html"
-            class="flex items-center justify-center 
-            bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-orange-400 to-orange-600 text-white w-32 h-10 rounded-md cursor-pointer">
-            <span>چاپ برگه مرخصی</span>
-          </a>
-          <button
-            class="flex items-center justify-center 
-            bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-green-400 to-green-700 text-white w-28 h-10 rounded-md cursor-pointer">
+          <button type="button" id="calculate"
+              class="flex items-center justify-center
+              bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-sky-400 to-blue-800 text-white w-36 h-10 rounded-md cursor-pointer focus:outline-none">
+              <span>محاسبه تعداد روز</span>
+          </button>
+          <button id="submitLeave" disabled
+            class="flex items-center justify-center outline-none
+            bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-lime-500 to-green-800 text-white w-28 h-10 rounded-md cursor-pointer">
             <span>ثبت مرخصی</span>
           </button>
-        </div>
+          <a href="{{ route('personnels.index') }}" class="flex items-center justify-center outline-none
+            bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-red-600 to-orange-600 text-white w-28 h-10 rounded-md cursor-pointer">
+              <span>بازگشت</span>
+            </a>
       </div>
     </form>
     </div>
 
-    <!-- <script src="{{ url('/js/filter.js') }}"></script> -->
     <script>
       jalaliDatepicker.startWatch({
         minDate: "attr",
@@ -248,7 +194,6 @@
         startDate = e.target.value.split("/")
         date1 = farvardin.solarToGregorian(Number(startDate[0]), Number(startDate[1]), Number(startDate[2]), "string")
         getDateTime1 = new Date(date1).getTime()
-        console.log(date1.split("-"))
       })
 
       document.getElementById("end").addEventListener("jdp:change", function (e) {
@@ -260,14 +205,20 @@
       var showText = document.getElementById("show-text")
       var claculateDate = document.createElement('span')
       var holidaysCountShow = document.createElement('span')
+      var distance = document.createElement('span')
+      var encouragement = document.createElement('span')
       var workingDays = document.createElement('span')
       var selectDaysError = document.createElement('span')
-
-      var encouragementValue
-      document.getElementById("encouragement").addEventListener("change", function (e) {
-              encouragementValue = e.target.value
-      })
       
+      var encouragementValue
+      // document.getElementById("encouragement").addEventListener("change", function (e) {
+      //   encouragementValue = e.target.value
+      // })
+      
+      if({{$personnel->useddistance}} === 2){
+        document.getElementById("distanceShow").style.color = 'red';
+        document.getElementById("distanceShow").style.textDecoration = 'line-through';
+      }
       
       checkDifferenceDates = () => {
         showText.innerHTML = " "
@@ -289,35 +240,49 @@
               }
             }
             
-            claculateDate.innerHTML = "کل روزها" + " " + Difference_In_Days + " " + "روز"
-            holidaysCountShow.innerHTML = "تعطیلات" + " " + holidaysCount.length + " " + "روز"
-            if(encouragementValue){
-              workingDays.innerHTML = 'کسر استحقاق' + " " + (Difference_In_Days - holidaysCount.length - encouragementValue) + " " + 'روز'
-              document.querySelector('.entitlement').value = Difference_In_Days - holidaysCount.length - encouragementValue
-
-            }else{
-              workingDays.innerHTML = 'کسر استحقاق' + " " + (Difference_In_Days - holidaysCount.length) + " " + 'روز'
-              document.querySelector('.entitlement').value = Difference_In_Days - holidaysCount.length
-            }
+            claculateDate.innerHTML = "کل روزها:" + " " + Difference_In_Days + " " + "روز"
+            holidaysCountShow.innerHTML = "تعطیلات:" + " " + holidaysCount.length + " " + "روز"
             
+            var entitlement
+            if(encouragementValue){
+              workingDays.innerHTML = 'کسر استحقاق:' + " " + (Difference_In_Days - holidaysCount.length - encouragementValue) + " " + 'روز'
+              encouragement.innerHTML = 'تشویقی:' + " " + encouragementValue + " " + 'روز'
+              entitlement = document.querySelector('.entitlement').value = Difference_In_Days - holidaysCount.length - encouragementValue
+            } else{
+              workingDays.innerHTML = 'کسر استحقاق:' + " " + (Difference_In_Days - holidaysCount.length) + " " + 'روز'
+              entitlement = document.querySelector('.entitlement').value = Difference_In_Days - holidaysCount.length
+            }
             showText.appendChild(claculateDate)
             showText.appendChild(holidaysCountShow)
+            if({{$personnel->useddistance}} < 2){
+              document.getElementById("distance").checked = true
+              distance.innerHTML = "بین راهی:" + " " + {{ $personnel->distance }} + " " + "روز"
+              document.querySelector('.entitlement').value = entitlement - {{ $personnel->distance }}
+              workingDays.innerHTML = 'کسر استحقاق:' + " " + (entitlement - {{ $personnel->distance }}) + " " + 'روز'
+            } else {
+              document.getElementById("distance").checked = false
+            }
+            showText.appendChild(distance)
+            showText.appendChild(encouragement)
             showText.appendChild(workingDays)
-
+            
+            
           } else {
             claculateDate.remove()
             selectDaysError.innerHTML = "تاریخ وارد شده اشتباه است!"
             showText.appendChild(selectDaysError)
           }
-
+          
         } else {
           selectDaysError.innerHTML = "تاریخ ها را درست وارد نمایید!"
           showText.appendChild(selectDaysError)
         }
+
+        document.getElementById("submitLeave").removeAttribute('disabled','')
       }
-
+      
       document.getElementById('calculate').addEventListener("click", () => checkDifferenceDates())
-
+      
     </script>
 </body>
 
