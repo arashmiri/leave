@@ -43,12 +43,12 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($personnelCounts as $count)
+            {{-- @foreach ($personnelCounts as $count)
                 <tr>
                     <td>{{ $count->address }}</td>
                     <td>{{ $count->personnel_count }}</td>
                 </tr>
-            @endforeach
+            @endforeach --}}
         </tbody>
     </table>
     

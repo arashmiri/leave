@@ -15,23 +15,23 @@ class PersonnelController extends Controller
      */
     public function index(Request $request)
     {
-        $personnels = Personnel::orderBy('id' , 'DESC')->get();
-
         if(isset($request['search']))
         {
             if(ctype_digit($request['search']))
             {
                 $personnels = DB::table('personnels')
                 ->where('personnel_code', 'like', '%' . $request['search'] . '%')
-                ->get();
+                ->paginate(50);
             }
             else
             {
                 $personnels = DB::table('personnels')
                 ->where('name', 'like', '%' . $request['search'] . '%')
-                ->get();
+                ->paginate(50);
             }
         }
+
+        $personnels = Personnel::orderBy('id' , 'DESC')->paginate(50);
 
         return view('personnel.index' , compact('personnels'));
     }

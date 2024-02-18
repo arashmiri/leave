@@ -99,6 +99,7 @@
         </div>
       </div>
       @endforeach
+      {{ $personnels->links() }}
     </div>
 </body>
 
