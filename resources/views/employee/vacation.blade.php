@@ -63,17 +63,17 @@
                                 
                             <div class="flex flex-wrap space-x-10 space-y-3">
                                 <div class="flex items-center space-x-10 space-x-reverse">
-                                    <span class="text-lg font-bold"> {{$personnel->rank}}  {{$personnel->name}} {{$personnel->personnel_code}}</span>
+                                    <span class="text-lg font-bold"> {{$employee->rank}}  {{$employee->name}} {{$employee->code}}</span>
                                     <span class="text-lg">تاریخ رفت: {{$vacation->start}}</span>
                                     <span class="text-lg">تاریخ برگشت:  {{$vacation->end}}</span>
                                     <span class="text-lg">آخرین حضور: {{$vacation->attendance}}</span>
                                 </div>
                                 <div class="flex items-center space-x-10 space-x-reverse">
                                     <span class="text-lg">استحقاق استفاده شده:  {{$vacation->entitlement}}</span>
-                                    <span class="text-lg">تشویقی: {{$vacation->encouragement}} </span>
-                                    <span class="text-lg">علت تشویقی:  {{$vacation->encouragementDescription}}</span>
+                                    <span class="text-lg">تشویقی: {{$vacation->Incentive}} </span>
+                                    <span class="text-lg">علت تشویقی:  {{$vacation->IncentiveDescription}}</span>
                                     <span class="text-lg">مسافت:  {{$vacation->distance}}</span>
-                                    <span class="text-lg">جمع کل روزها:  {{$vacation->entitlement  + $vacation->encouragement + $vacation->distance }}</span>
+                                    <span class="text-lg">جمع کل روزها:  {{$vacation->entitlement  + $vacation->Incentive + $vacation->distance }}</span>
                                 </div>
                             </div>
 

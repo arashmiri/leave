@@ -2,38 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use App\Models\Personnel;
 use App\Models\Vacation;
 use App\Models\Encouragement;
+use App\Models\Incentive;
 use Illuminate\Http\Request;
 
 class VacationController extends Controller
 {
     public function show(string $id , Request $request)
     {
+        // can we merge this two querys?
+        $employee = Employee::find($id);
 
-        $personnel = Personnel::find($id);
+        $vacations = Employee::find($id)->vacations()->orderBy('id' , 'DESC')->get();
 
-        $vacations = Personnel::find($id)->vacations()->orderBy('id' , 'DESC')->get();
-
-        return view('personnel.vacation' , compact('vacations' , 'personnel'));
+        return view('employee.vacation' , compact('vacations' , 'employee'));
     }
 
     public function create(string $id)
     {
-        $personnel = Personnel::find($id);
+        $employee = Employee::find($id);
 
-        $encouragements = $personnel->encouragements()->orderBy('id' , 'DESC')->get();;
+        $incentives = $employee->incentives()->orderBy('id' , 'DESC')->get();;
         
-        return view('vacation.create' , compact('personnel' , 'encouragements'));
+        return view('vacation.create' , compact('employee' , 'incentives'));
     }
 
     public function store(Request $request)
     {
 
-        //dd($request);
-
-        $personnel = Personnel::find($request->personnel_id);
+        $employee = Employee::find($request->employee_id);
 
         $vacation = new Vacation();
 
@@ -43,48 +43,48 @@ class VacationController extends Controller
         $vacation->end = $request->end ;
         $vacation->attendance = $request->attendance ;
 
-
-        //check entitlement 
-        if($personnel->entitlement < $request->entitlement)
+        if($employee->entitlement < $request->entitlement)
         {
             dd('میزان استحقاق وارد شده از میزان استحقاق مانده بیشتر است');
         }
 
-        $personnel->entitlement = $personnel->entitlement - $request->entitlement ;
+        $employee->entitlement = $employee->entitlement - $request->entitlement ;
 
         $vacation->entitlement = $request->entitlement;
 
-        if(isset($request->encouragement))
+        //dd($request);
+
+        if(isset($request->incentive))
         {
 
             //dd($request->encouragement);
-            foreach ($request->encouragement as $encouragement) 
+            foreach ($request->incentive as $incentive) 
             {
-                $value = Encouragement::find($encouragement);
+                $incentive = Incentive::find($incentive);
 
-                $vacation->encouragement = $value->days + $vacation->encouragement; 
-                $vacation->encouragementDescription = $value->title . "-" . $vacation->encouragementDescription; 
+                $vacation->incentive = $incentive->days + $vacation->Incentive; 
+                $vacation->IncentiveDescription	 = $incentive->title . "+" . $vacation->IncentiveDescription; 
 
-                $personnel->encouragements()->detach($encouragement);
+                $employee->incentives()->detach($incentive);
             }
         }
 
        
         //check if used distance 
 
-            if($personnel->useddistance < 2)
+            if($employee->useddistance < 2)
             {
-                $vacation->distance = $personnel->distance;
-                $personnel->useddistance = $personnel->useddistance + 1 ;
+                $vacation->distance = $employee->distance;
+                $employee->useddistance = $employee->useddistance + 1 ;
             }
 
 
-        $vacation->personnel_id = $request->personnel_id ;
+        $vacation->employee_id = $request->employee_id ;
 
-        $personnel->save();
+        $employee->save();
         $vacation->save();
 
-        return redirect()->route('vacation.history', ['id' => $request->personnel_id]);
+        return redirect()->route('vacation.history', ['id' => $request->employee_id]);
     }
 
     public function destroy(string $id)
@@ -93,16 +93,16 @@ class VacationController extends Controller
 
         $vacation = Vacation::find($id);
 
-        $personnel = Personnel::find($vacation->personnel->id);
+        $employee = Employee::find($vacation->employee_id);
 
-        $personnel->entitlement = $vacation->entitlement + $personnel->entitlement ;
+        $employee->entitlement = $vacation->entitlement + $employee->entitlement ;
 
         if($vacation->distance > 0)
         {
-            $personnel->useddistance = $personnel->useddistance - 1 ;
+            $employee->useddistance = $employee->useddistance - 1 ;
         }
 
-        $personnel->save();
+        $employee->save();
 
         $vacation->delete();
 

@@ -10,12 +10,10 @@ class Vacation extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
     protected $guarded = [];
 
     public function personnel(): BelongsTo
     {
-        return $this->belongsTo(Personnel::class);
+        return $this->belongsTo(Employee::class);
     }
 }

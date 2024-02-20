@@ -1,51 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="{{ url('/css/output.css') }}" />
-  <title>ثبت مرخصی</title>
-</head>
-<body>
-
-    <p> ثبت مرخصی برای :{{ $personnel->rank }} {{ $personnel->name }}</p>
-    <p> استحقاق باقی مانده :  {{ $personnel->entitlement }}</p>
-    <p> کد کار گزینی :  {{ $personnel->personnel_code }}</p>
-
-    <form action="{{route('vacation.store')}}" method="POST">
-        @csrf
-
-        <label class="text-red-500">تاریخ رفت :</label><br>
-        <input type="date" id="" name="start"><br>
-
-        <label class="text-red-500">تاریخ پایان :</label><br>
-        <input type="date" id="" name="end"><br>
-
-        <label >تاریخ حضور :</label><br>
-        <input type="date" id="" name="attendance"><br>
-
-        <label >استحقاق :</label><br>
-        <input type="number" id="" name="entitlement"><br>
-
-        <label >تشویقی :</label><br>
-        <input type="number" id="" name="encouragement"><br>
-        
-        <label >در صورت ثبت مرخصی تشویقی علت آن را در کادر زیر بنویسید.</label><br>
-        <input type="text" id="" name="encouragementDescription"><br>
-
-        <label >استفاده از بعد مسافت </label><br>
-        <input type="checkbox" id="" name="distance"><br>
-
-        <input type="hidden" value="{{$personnel->id}}" name="PersonnelID">
-
-
-        <input type="submit">
-
-    </form>
-</body>
-</html> -->
-
 <!doctype html>
 <html lang="en" dir="rtl">
 
@@ -91,11 +43,11 @@
             <span class="text-xl font-bold">ثبت مرخصی برای:</span>
           </div>
           <div class="flex items-center justify-start space-x-6 space-x-reverse my-6 text-lg">
-            <span>نام و نشان: {{ $personnel->name }} </span>
-            <span>درجه: {{ $personnel->rank }} </span>
-            <span> شماره کارگزینی :  {{ $personnel->personnel_code }}</span>
-            <span> استحقاق باقی مانده :  {{ $personnel->entitlement }}</span>
-            <span>این پرسنل تا این لحظه {{ $personnel->useddistance }} مرتبه از مرخصی توراهی استفاده کرده</span>
+            <span>نام و نشان: {{ $employee->name }} </span>
+            <span>درجه: {{ $employee->rank }} </span>
+            <span> شماره کارگزینی :  {{ $employee->code }}</span>
+            <span> استحقاق باقی مانده :  {{ $employee->entitlement }}</span>
+            <span>این پرسنل تا این لحظه ( {{ $employee->useddistance }} )  مرتبه از مرخصی توراهی استفاده کرده</span>
         </div>
           <div class="flex flex-col my-6">
             <div class="flex space-x-6 space-x-reverse" style="margin-bottom:30px">
@@ -155,28 +107,15 @@
                 <input class="entitlement w-64 bg-gray-50 border-1 shadow-lg text-gray-900 border-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                 type="number" id="" name="entitlement" placeholder=" استحقاق...">
               </div>
-
-              {{-- <div class="flex items-center justify-center space-x-4 space-x-reverse">
-                <input 
-                class="w-64 bg-gray-50 border-1 shadow-lg text-gray-900 border-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" 
-                type="number" id="encouragement" name="encouragement" placeholder=" تشویقی...">
-              </div>
-
-              <div class="flex items-center justify-center space-x-4 space-x-reverse">
-                <textarea name="encouragementDescription" id="message" rows="1"
-                  class="w-64 bg-gray-50 border-1 shadow-lg text-gray-900 border-gray-400 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-                  placeholder="علت تشویقی..."></textarea>
-              </div> --}}
-
-              @foreach ($encouragements as $encouragement)
-                <input type="checkbox" id="" name="encouragement[]" value="{{$encouragement->id}}">
-                <label for="vehicle1">{{$encouragement->title}} {{$encouragement->days}} روز</label><br>
+              @foreach ($incentives as $incentive)
+                <input type="checkbox" id="" name="incentive[]" value="{{$incentive->id}}">
+                <label>{{$incentive->title}} {{$incentive->days}} روز</label><br>
               @endforeach
 
 
             </div>
 
-            <input type="hidden" id="custId" name="personnel_id" value="{{$personnel->id}}">
+            <input type="hidden" id="custId" name="employee_id" value="{{$employee->id}}">
 
             <button type="button" id="calculate"
                   class="flex items-center justify-center

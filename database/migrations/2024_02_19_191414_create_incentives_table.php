@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('encouragements', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('incentives', function (Blueprint $table) {
+            $table->id();
             $table->string('title');
             $table->integer('days');
             $table->timestamps();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('encouragements');
+        Schema::dropIfExists('incentives');
     }
 };

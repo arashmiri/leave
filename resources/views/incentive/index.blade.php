@@ -9,21 +9,21 @@
 <body>
     <h2>تشویقی های تیپی</h2>
 
-    @foreach ($encouragementsWithAllPersonnel as $encouragement)
+    @foreach ($incentivesWithAllEmployee as $incentive)
       
         <p>عنوان تشویقی</p>
-        {{ $encouragement->title }}<br>
+        {{ $incentive->title }}<br>
         <p>تعداد روز تشویقی</p>
-        {{ $encouragement->days}}<br>
+        {{ $incentive->days}}<br>
 
-        <form action="{{route('encouragement.destroy' , $encouragement->id)}}" method="post">
+        <form action="{{route('incentive.destroy' , $incentive->id)}}" method="post">
             @csrf
             @method('DELETE')
 
         <a href=""
             class="flex items-center justify-center 
             bg-[conic-gradient(at_left,_var(--tw-gradient-stops))]  text-red w-24 h-10 rounded-md cursor-pointer">
-            <input type="submit" value="حذف مرخصی">
+            <input type="submit" value="حذف مرخصی تشویقی تیپ">
         </a>
 
         </form>

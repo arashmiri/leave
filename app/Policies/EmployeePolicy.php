@@ -2,11 +2,12 @@
 
 namespace App\Policies;
 
+use App\Models\Employee;
 use App\Models\Personnel;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class PersonnelPolicy
+class EmployeePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -40,7 +41,7 @@ class PersonnelPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Personnel $personnel): Response
+    public function update(User $user, Employee $employee): Response
     {
         return $user->isAdministrator()
         ? Response::allow()

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\Personnel;
 use App\Models\Vacation;
@@ -11,7 +12,7 @@ class StatisticController extends Controller
 {
     public function index()
     {
-        $personnelCounts = Personnel::select('address', DB::raw('count(*) as personnel_count'))
+        $personnelCounts = Employee::select('address', DB::raw('count(*) as personnel_count'))
         ->groupBy('address')
         ->get();
 

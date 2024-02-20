@@ -21,14 +21,14 @@
         <span>تقویم</span>
       </a> -->
       </div>
-      <a href="{{route('personnels.index')}}" class="bg-white rounded-full p-2 shadow-lg">
+      <a href="{{route('employees.index')}}" class="bg-white rounded-full p-2 shadow-lg">
         <img src="{{ url('/images/logo.png') }}" alt="logo" class="w-12" />
       </a>
     </div>
 
     <div class="my-10 max-w-7xl m-auto">
       <div class="flex justify-between">
-        <form class="w-80" action="{{route('personnels.index')}}" method="GET">
+        <form class="w-80" action="{{route('employees.index')}}" method="GET">
           <label for="default-search"
             class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
           <div class="relative">
@@ -48,28 +48,31 @@
         </form>
 
         <div class="flex space-x-4 space-x-reverse">
-          <a href="{{ route('personnels.create') }}" class="flex items-center justify-center 
+          <a href="{{ route('employees.create') }}" class="flex items-center justify-center 
             bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-lime-500 to-green-800 
             w-28 h-10 text-white p-2 rounded-md cursor-pointer">
             <span>ثبت پایور جدید</span>
           </a>
         </div>
+
+        @include('errors.message')
+
       </div>
-      @foreach ($personnels as $personnel)
+      @foreach ($employees as $employee)
       <div class="my-6">
         <div class="flex items-center space-x-4 space-x-reverse">
           <div class="flex items-center space-x-6 space-x-reverse rounded-xl shadow-lg p-4 bg-white">
             <div>
               <div class="flex items-center justify-center relative w-16 h-16 ">
-                <img src="{{ asset("storage/$personnel->image"); }}" alt="logo" class="w-full h-full rounded-full p-1" />
+                <img src="{{ asset("storage/$employee->image"); }}" alt="logo" class="w-full h-full rounded-full p-1" />
                 <span class="absolute top-0 border-[3px] border-green-600 w-16 h-16 rounded-full"></span>
               </div>
             </div>
                 <div class="flex flex-wrap space-x-10 space-y-2 space-y-reverse">
-                <span class="text-lg font-bold ml-10">  درجه  : {{$personnel->rank}}</span>
-                <span class="text-lg font-bold ml-10">نام و نشان : {{$personnel->name}}</span>
-                <span class="text-lg"> کد کارگزینی :  {{$personnel->personnel_code}}</span>
-                <span class="text-lg"> استحقاق باقی مانده :  {{$personnel->entitlement}}</span>
+                <span class="text-lg font-bold ml-10">  درجه  : {{$employee->rank}}</span>
+                <span class="text-lg font-bold ml-10">نام و نشان : {{$employee->name}}</span>
+                <span class="text-lg"> کد کارگزینی :  {{$employee->code}}</span>
+                <span class="text-lg"> استحقاق باقی مانده :  {{$employee->entitlement}}</span>
                 </div>
                 </div><br/> 
           <div class="flex flex-col space-y-2">
@@ -84,14 +87,14 @@
 
             <div
               class="flex items-center justify-center bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] from-indigo-200 via-slate-600 to-indigo-200 text-white w-20 h-8 rounded-md cursor-pointer">
-              <a href="{{ url("/vacation/$personnel->id") }}">
+              <a href="{{ url("/vacation/$employee->id") }}">
                 <span>ثبت مرخصی</span>
               </a>
             </div>
 
             <div
               class="flex items-center justify-center bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] from-indigo-200 via-slate-600 to-indigo-200 text-white w-20 h-8 rounded-md cursor-pointer">
-              <a href="{{ url('personnels/' . $personnel->id ) }}">
+              <a href="{{ url('employees/' . $employee->id ) }}">
                 <span>مشاهده</span>
               </a>
             </div>
@@ -99,7 +102,7 @@
         </div>
       </div>
       @endforeach
-      {{ $personnels->links() }}
+      {{ $employees->links() }}
     </div>
 </body>
 

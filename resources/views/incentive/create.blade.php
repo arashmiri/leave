@@ -7,12 +7,15 @@
     <title>Document</title>
 </head>
 <body>
+
+    @include('errors.message')
+
     <h2>ثبت مرخصی تشویقی</h2>
 
-    <form action="{{route('encouragement.store')}}" method="POST">
+    <form action="{{route('incentive.store')}}" method="POST">
         @csrf
         <label for="fname">کد کارگزینی</label><br>
-        <input type="text" id="" name="personnel" value=""><br>
+        <input type="text" id="" name="code" value=""><br>
         <label for="fname">علت تشویقی</label><br>
         <input type="text" id="" name="title" value=""><br>
         <label for="fname">تعداد روز تشویقی</label><br>
@@ -24,7 +27,7 @@
 
     <h2>ثبت مرخصی برای همه افراد تیپ</h2>
 
-    <form action="{{route('encouragementMany.store')}}" method="POST">
+    <form action="{{route('incentiveMany.store')}}" method="POST">
         @csrf
         <label for="fname">علت تشویقی</label><br>
         <input type="text" id="" name="title" value=""><br>

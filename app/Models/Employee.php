@@ -6,11 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Personnel extends Model
+class Employee extends Model
 {
     use HasFactory;
-
-    public $timestamps = false;
 
     protected $guarded = [];
 
@@ -19,8 +17,8 @@ class Personnel extends Model
         return $this->hasMany(Vacation::class);
     }
 
-    public function encouragements()
+    public function incentives()
     {
-        return $this->belongsToMany(Encouragement::class)->withTimestamps();
+        return $this->belongsToMany(Incentive::class)->withTimestamps();
     }
 }

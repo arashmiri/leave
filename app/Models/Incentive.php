@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Encouragement extends Model
+class Incentive extends Model
 {
     use HasFactory;
 
@@ -14,8 +14,8 @@ class Encouragement extends Model
         'days',
     ];
 
-    public function personnel()
+    public function employee()
     {
-        return $this->belongsToMany(Personnel::class)->withTimestamps();
+        return $this->belongsToMany(Employee::class)->withTimestamps();
     }
 }

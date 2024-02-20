@@ -10,6 +10,7 @@
 </head>
 
 <body class="bg-gray-100">
+
   <div>
     <div class="flex items-center justify-between h-20 px-10 shadow-lg">
       <p class="font-medium text-lg">سامانه ثبت مرخصی پایوران</p>
@@ -17,6 +18,8 @@
         <img src="{{ url('/images/logo.png') }}" alt="logo" class="w-12" />
       </a>
     </div>
+
+    @include('errors.message')
 
     <div class="my-8 max-w-7xl m-auto">
       <div class="flex flex-col space-y-6">
@@ -29,15 +32,14 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
           </svg>
           <a href="#">
-            <span class="font-semibold text-lg">ویرایش اطلاعات پایور</span>
+            <span class="font-semibold text-lg">اضافه کردن پایور جدید</span>
           </a>
         </div>
 
         @include('errors.message')
 
-        <form action="{{route('personnels.update' , $personnel->id)}}" method="POST">
-        @csrf
-        @method('PUT')
+        <form action="{{route('employees.store')}}" method="post">
+            @csrf
         <div class="w-full rounded-lg shadow-lg p-10 py-8 bg-white space-y-8">
           <div class="flex items-center space-x-6 space-x-reverse">
 
@@ -63,14 +65,14 @@
             <div class="flex flex-col items-start space-y-3">
               <div class="flex items-center justify-center space-x-4 space-x-reverse">
                 <label class="font-bold text-2xl name-label">نام و نشان: </label>
-                <input type="text" name="name" value="{{$personnel->name}}" class="rounded-lg border-1 shadow-lg border-gray-400 name-input placeholder:text-sm"
-                  placeholder="{{$personnel->name}}">
+                <input type="text" name="name" id="" class="rounded-lg border-1 shadow-lg border-gray-400 name-input placeholder:text-sm"
+                  placeholder="لطفا نام و نشان را وارد نمایید">
               </div>
               <div class="flex items-center justify-center space-x-4 space-x-reverse">
                 <label class="text-lg badage-label">درجه: </label>
-                <select name="rank" value="{{$personnel->rank}}"
+                <select name="rank"
                   class="w-44 bg-white border border-1 shadow-lg text-gray-600 text-sm rounded-lg border-gray-400 focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <option selected>{{$personnel->rank}}</option>
+                  <option selected>انتخاب درجه...</option>
                   <option value="گروهبانیکم">گروهبان یکم</option>
                   <option value="استواردوم">استوار دوم</option>
                   <option value="استواریکم">استوار یکم</option>
@@ -90,49 +92,76 @@
             <div class="flex flex-col items-center justify-center w-64 h-28 bg-gray-100 space-y-2 rounded-md shadow-lg placeholder:text-sm">
               <label class="font-semibold">شماره پرسنلی:</label>
               <div class="flex space-x-2 space-x-reverse">
-                <input type="text" name="personnel_code" value="{{$personnel->personnel_code}}"
+                <input type="text" name="code" id=""
                   class="rounded-lg border-1 shadow-lg personnelId-input placeholder:text-sm border-gray-400"
-                  placeholder="{{$personnel->personnel_code}}">
+                  placeholder="لطفا شماره پرسنلی را وارد نمایید:">
               </div>
             </div>
 
             <div class="flex flex-col items-center justify-center w-72 h-28 bg-gray-100 space-y-2 rounded-md shadow-lg">
-              <label class="font-semibold">'گردان' : </label>
+              <label class="font-semibold">گردان : </label>
               <div class="flex space-x-2 space-x-reverse">
-                <input type="text" name="battalion" value="{{$personnel->battalion}}" class="rounded-lg border-1 shadow-lg border-gray-400 address-input placeholder:text-sm"
-                  placeholder="{{$personnel->battalion}}">
+                <input type="text" name="battalion" id="" class="rounded-lg border-1 shadow-lg border-gray-400 address-input placeholder:text-sm"
+                  placeholder="گردان را وارد کنید">
               </div>
             </div>
 
             <div class="flex flex-col items-center justify-center w-72 h-28 bg-gray-100 space-y-2 rounded-md shadow-lg">
               <label class="font-semibold">استحقاق : </label>
               <div class="flex space-x-2 space-x-reverse">
-                <input type="text" name="entitlement" value="{{$personnel->entitlement}}" class="rounded-lg border-1 shadow-lg border-gray-400 address-input placeholder:text-sm"
-                  placeholder="{{$personnel->entitlement}}">
+                <input type="text" name="entitlement" id="" class="rounded-lg border-1 shadow-lg border-gray-400 address-input placeholder:text-sm"
+                  placeholder="استحقاق را وارد کنید">
               </div>
             </div>
 
             <div class="flex flex-col items-center justify-center w-72 h-28 bg-gray-100 space-y-2 rounded-md shadow-lg">
-                <label class="font-semibold">آدرس:</label>
-                <div class="flex space-x-2 space-x-reverse">
-                  <input type="text" name="address" value="{{$personnel->address}}" class="rounded-lg border-1 shadow-lg border-gray-400 address-input placeholder:text-sm"
-                    placeholder="{{$personnel->address}}">
-                </div>
-              </div>
-
-            <div class="flex flex-col items-center justify-center w-64 h-28 bg-gray-100 space-y-2 rounded-md shadow-lg">
-              <label class="font-semibold">مسافت:</label>
-              <div class="flex space-x-2 space-x-reverse">
-                <select name="distance" value="{{$personnel->distance}}"
-                  class="w-44 bg-white border border-1 shadow-lg text-gray-600 text-sm rounded-lg border-gray-400 focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <option selected>{{$personnel->distance}}</option>
-                  <option value="1">بین 200 تا 500 کیلومتر</option>
-                  <option value="2">بین 500 تا 1500 کیلومتر</option>
-                  <option value="3">یالای 1500 کیلومتر</option>
-                </select>
-              </div>
+              <label class="font-semibold">استان محل سکونت : </label>
+              <select name="address"
+                class="w-44 bg-white border border-1 shadow-lg text-gray-600 text-sm rounded-lg border-gray-400 focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="0">استان را انتخاب کنید</option> 
+                <option value="آذربایجان شرقی">آذربایجان شرقی</option> 
+                <option value="آذربایجان غربی">آذربایجان غربی</option> 
+                <option value="اردبیل">اردبیل</option> 
+                <option value="اصفهان">اصفهان</option> 
+                <option value="البرز">البرز</option> 
+                <option value="ایلام">ایلام</option> 
+                <option value="بوشهر">بوشهر</option> 
+                <option value="تهران">تهران</option> 
+                <option value="چهارمحال بختیاری">چهارمحال بختیاری</option> 
+                <option value="خراسان جنوبی">خراسان جنوبی</option> 
+                <option value="خراسان رضوی">خراسان رضوی</option> 
+                <option value="خراسان شمالی">خراسان شمالی</option> 
+                <option value="خوزستان">خوزستان</option> 
+                <option value="زنجان">زنجان</option> 
+                <option value="سمنان">سمنان</option> 
+                <option value="سیستان و بلوچستان">سیستان و بلوچستان</option> 
+                <option value="فارس">فارس</option> 
+                <option value="قزوین">قزوین</option> 
+                <option value="قم">قم</option> 
+                <option value="کردستان">کردستان</option> 
+                <option value="کرمان">کرمان</option> 
+                <option value="کرمانشاه">کرمانشاه</option> 
+                <option value="کهکیلویه و بویراحمد">کهکیلویه و بویراحمد</option> 
+                <option value="گلستان">گلستان</option> 
+                <option value="گیلان">گیلان</option> 
+                <option value="لرستان">لرستان</option> 
+                <option value="مازندران">مازندران</option> 
+                <option value="مرکزی">مرکزی</option> 
+                <option value="هرمزگان">هرمزگان</option> 
+                <option value="همدان">همدان</option> 
+                <option value="یزد">یزد</option>
+              </select>
             </div>
-        <input type="submit" value="ویرایش اطلاعات">
+          </div>
+          </div>
+        
+        <div class="flex items-center justify-end space-x-4 space-x-reverse">
+          <a href="" class="flex items-center justify-center
+            bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-green-400 to-green-700 text-white w-28 h-10 rounded-md cursor-pointer">
+            <input type="submit" value="ثبت اطلاعات">
+          </a>
+        </div>
+
       </form>
       </div>
     </div>

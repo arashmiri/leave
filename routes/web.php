@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Controllers\PersonnelController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\EncouragementController;
 use App\Http\Controllers\VacationController;
 use App\Http\Controllers\StatisticController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\IncentiveController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -34,28 +33,28 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('personnels', PersonnelController::class)->middleware('auth');
+Route::resource('employees', EmployeeController::class)->middleware('auth');
 
 
 Route::get('/vacation/{id}', [VacationController::class , 'create'])->middleware('auth')->name('vacation.create');
 
 Route::post('/vacation', [VacationController::class , 'store'])->middleware('auth')->name('vacation.store');
 
-Route::get('personnels/{id}/vacation' , [VacationController::class , 'show'] )->middleware('auth')->name('vacation.history');
+Route::get('employees/{id}/vacation' , [VacationController::class , 'show'] )->middleware('auth')->name('vacation.history');
 
 Route::delete('/vacations/{vacation}', [VacationController::class , 'destroy'])->middleware('auth')->name('vacations.destroy');
 
-Route::get('/encouragement/create', [EncouragementController::class, 'create'])->name('encouragement.create');
+Route::get('/incentive/create', [IncentiveController::class, 'create'])->name('incentive.create');
 
-Route::post('/encouragement', [EncouragementController::class , 'store'])->name('encouragement.store');
+Route::post('/incentive', [IncentiveController::class , 'store'])->name('incentive.store');
 
-Route::post('/encouragementMany', [EncouragementController::class , 'storeMany'])->name('encouragementMany.store');
+Route::post('/incentiveMany', [IncentiveController::class , 'storeMany'])->name('incentiveMany.store');
 
-Route::get('/encouragementBrigade', [EncouragementController::class, 'index'])->name('encouragementBrigade.index');
+Route::get('/incentiveBrigade', [IncentiveController::class, 'index'])->name('incentiveBrigade.index');
 
-Route::get('/personnels/{id}/encouragement' , [EncouragementController::class, 'show'])->name('personnel.encouragement');
+Route::get('/employees/{id}/incentive' , [IncentiveController::class, 'show'])->name('employee.insentive');
 
-Route::delete('/encouragement/{id}', [EncouragementController::class, 'destroy'])->name('encouragement.destroy');
+Route::delete('/incentive/{id}', [IncentiveController::class, 'destroy'])->name('incentive.destroy');
 
 Route::get('/statistics', [StatisticController::class, 'index'])->name('statistics.index');
 
