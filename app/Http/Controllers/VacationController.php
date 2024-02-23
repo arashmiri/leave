@@ -19,7 +19,7 @@ class VacationController extends Controller
 
         $vacations = Employee::find($id)->vacations()->orderBy('id' , 'DESC')->get();
 
-        return view('employee.vacation' , compact('vacations' , 'employee'));
+        return view('vacation.history' , compact('vacations' , 'employee'));
     }
 
     public function create(string $id)
@@ -43,11 +43,10 @@ class VacationController extends Controller
 
         $vacation = new Vacation();
 
-
         //check dates not smaller than eachother
-        $vacation->start = $request->start ;
-        $vacation->end = $request->end ;
-        $vacation->attendance = $request->attendance ;
+        $vacation->start = $request->start;
+        $vacation->end = $request->end;
+        $vacation->attendance = $request->attendance;
 
         if(isset($request->holiday))
         {

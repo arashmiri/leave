@@ -5,7 +5,6 @@ use App\Http\Controllers\VacationController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\IncentiveController;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,50 +19,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-
-    // $lastAttendence = DB::select(
-    //    'SELECT attendance
-    //     FROM vacations
-    //     WHERE employee_id = ?
-    //     ORDER BY id DESC
-    //     LIMIT 1,1'
-    // , [1]);
-    
-    // echo $lastAttendence[0]->attendance ;
-
-    function getHolidaysBetweenDates($startDate, $endDate, $holidays) {
-        $startTimestamp = strtotime($startDate);
-        $endTimestamp = strtotime($endDate);
-
-        //dd($startDate);
-    
-        $holidayCount = 0;
-    
-        for ($currentDate = $startTimestamp; $currentDate <= $endTimestamp; $currentDate += 86400) {
-            // Check if the current date is a holiday
-            $currentDateFormatted = date('Y-m-d', $currentDate);
-            if (in_array($currentDateFormatted, $holidays)) {
-                $holidayCount++;
-            }
-        }
-    
-        return $holidayCount;
-    }
-    
-    // Example usage
-    $startDate = '2024-99-99';
-    $endDate = '2024-99-99';
-    
-    // List of holidays (replace this with your actual list of holidays)
-    $holidays = ['2024-01-01', '2024-12-25'];
-    
-    $result = getHolidaysBetweenDates($startDate, $endDate, $holidays);
-    
-    echo "Number of holidays between $startDate and $endDate: $result";
-
-})->middleware('auth');
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -74,14 +29,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('employees', EmployeeController::class)->middleware('auth');
+Route::resource('/employees', EmployeeController::class)->middleware('auth');
 
 
 Route::get('/vacation/{id}', [VacationController::class , 'create'])->middleware('auth')->name('vacation.create');
 
 Route::post('/vacation', [VacationController::class , 'store'])->middleware('auth')->name('vacation.store');
 
-Route::get('employees/{id}/vacation' , [VacationController::class , 'show'] )->middleware('auth')->name('vacation.history');
+Route::get('/employees/{id}/vacation' , [VacationController::class , 'show'] )->middleware('auth')->name('vacation.history');
 
 Route::delete('/vacations/{vacation}', [VacationController::class , 'destroy'])->middleware('auth')->name('vacations.destroy');
 

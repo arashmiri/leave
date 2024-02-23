@@ -15,11 +15,16 @@
     <div class="flex items-center justify-between h-20 px-10 shadow-lg">
       <div class="flex items-center space-x-2 space-x-reverse">
         <p class="font-medium text-lg">سامانه ثبت مرخصی پایوران</p>
-        <!-- <a href="./calendar.html" class="flex items-center justify-center 
-        bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-lime-500 to-green-800 
-        w-16 h-8 text-white p-2 rounded-md cursor-pointer">
-        <span>تقویم</span>
-      </a> -->
+
+        {{-- logout --}}
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <a :href="route('logout')">
+                {{ __('Log Out') }}
+            </a>
+        </form>
+
       </div>
       <a href="{{route('employees.index')}}" class="bg-white rounded-full p-2 shadow-lg">
         <img src="{{ url('/images/logo.png') }}" alt="logo" class="w-12" />
