@@ -19,10 +19,7 @@
         {{-- logout --}}
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-
-            <a :href="route('logout')">
-                {{ __('Log Out') }}
-            </a>
+            <input type="submit" value="{{ __('Log Out') }}">
         </form>
 
       </div>
