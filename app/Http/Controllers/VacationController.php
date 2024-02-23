@@ -8,6 +8,7 @@ use App\Models\Vacation;
 use App\Models\Encouragement;
 use App\Models\Incentive;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VacationController extends Controller
 {
@@ -35,6 +36,11 @@ class VacationController extends Controller
 
         $employee = Employee::find($request->employee_id);
 
+        if($employee->entitlement < $request->entitlement)
+        {
+            return redirect()->back()-with('fail' , 'مقدار استحقاق وارد شده از استحقاق مانده بیشتر است');
+        }
+
         $vacation = new Vacation();
 
 
@@ -43,9 +49,9 @@ class VacationController extends Controller
         $vacation->end = $request->end ;
         $vacation->attendance = $request->attendance ;
 
-        if($employee->entitlement < $request->entitlement)
+        if(isset($request->holiday))
         {
-            dd('میزان استحقاق وارد شده از میزان استحقاق مانده بیشتر است');
+            $vacation->holiday = $request->holiday;
         }
 
         $employee->entitlement = $employee->entitlement - $request->entitlement ;
@@ -70,13 +76,13 @@ class VacationController extends Controller
         }
 
        
-        //check if used distance 
+        //check used distance 
 
-            if($employee->useddistance < 2)
-            {
-                $vacation->distance = $employee->distance;
-                $employee->useddistance = $employee->useddistance + 1 ;
-            }
+        if($employee->useddistance < 2)
+        {
+            $vacation->distance = $employee->distance;
+            $employee->useddistance = $employee->useddistance + 1 ;
+        }
 
 
         $vacation->employee_id = $request->employee_id ;
@@ -85,6 +91,26 @@ class VacationController extends Controller
         $vacation->save();
 
         return redirect()->route('vacation.history', ['id' => $request->employee_id]);
+    }
+
+    // public function showPrint()
+    // {
+    //     return view('vacation.print');
+    // }
+
+    public function print(int $id)
+    {
+        $vacation = Vacation::find($id);
+
+        $lastAttendence = DB::select(
+            'SELECT attendance
+            FROM vacations
+            WHERE employee_id = ?
+            ORDER BY id DESC
+            LIMIT 1,1'
+    , [$vacation->employee->id]);
+
+        return view('vacation.print' , compact('vacation' , 'lastAttendence'));
     }
 
     public function destroy(string $id)

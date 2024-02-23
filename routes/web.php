@@ -5,6 +5,7 @@ use App\Http\Controllers\VacationController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\IncentiveController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,6 +21,46 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+
+    // $lastAttendence = DB::select(
+    //    'SELECT attendance
+    //     FROM vacations
+    //     WHERE employee_id = ?
+    //     ORDER BY id DESC
+    //     LIMIT 1,1'
+    // , [1]);
+    
+    // echo $lastAttendence[0]->attendance ;
+
+    function getHolidaysBetweenDates($startDate, $endDate, $holidays) {
+        $startTimestamp = strtotime($startDate);
+        $endTimestamp = strtotime($endDate);
+
+        //dd($startDate);
+    
+        $holidayCount = 0;
+    
+        for ($currentDate = $startTimestamp; $currentDate <= $endTimestamp; $currentDate += 86400) {
+            // Check if the current date is a holiday
+            $currentDateFormatted = date('Y-m-d', $currentDate);
+            if (in_array($currentDateFormatted, $holidays)) {
+                $holidayCount++;
+            }
+        }
+    
+        return $holidayCount;
+    }
+    
+    // Example usage
+    $startDate = '2024-99-99';
+    $endDate = '2024-99-99';
+    
+    // List of holidays (replace this with your actual list of holidays)
+    $holidays = ['2024-01-01', '2024-12-25'];
+    
+    $result = getHolidaysBetweenDates($startDate, $endDate, $holidays);
+    
+    echo "Number of holidays between $startDate and $endDate: $result";
 
 })->middleware('auth');
 
@@ -62,5 +103,6 @@ Route::post('/statistics', [StatisticController::class,'ends'])->name('statistic
 
 Route::post('/statisticss', [StatisticController::class,'attendance'])->name('statistics.attendance');
 
+Route::get('/vacations/{vacation}/print', [VacationController::class, 'print'])->name('vacations.print');
 
 require __DIR__.'/auth.php';

@@ -87,6 +87,10 @@
                             <input type="submit" value="حذف مرخصی">
                         </form>
 
+                        <form action="{{route('vacations.print' , $vacation->id)}}" method="GET">
+                            <input type="submit" value="چاپ برگه مرخصی">
+                        </form>
+
 
                     </div>
 
