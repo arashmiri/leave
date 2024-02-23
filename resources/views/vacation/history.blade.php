@@ -52,6 +52,7 @@
                 @include('errors.message')
 
                 @foreach ($vacations as $vacation)
+
                 <div class="my-6 w-full">
 
                     <div class="flex items-center space-x-4 space-x-reverse w-full">
@@ -59,11 +60,9 @@
                         <div
                             class="flex items-center space-x-6 space-x-reverse rounded-xl shadow-lg p-3 px-6 bg-white w-full">
                             
-
-                                
                             <div class="flex flex-wrap space-x-10 space-y-3">
                                 <div class="flex items-center space-x-10 space-x-reverse">
-                                    <span class="text-lg font-bold"> {{$employee->rank}}  {{$employee->name}} {{$employee->code}}</span>
+                                    <span class="text-lg font-bold"> {{$vacation->employee->rank}}  {{$vacation->employee->name}} {{$vacation->employee->code}}</span>
                                     <span class="text-lg">تاریخ رفت: {{$vacation->start}}</span>
                                     <span class="text-lg">تاریخ برگشت:  {{$vacation->end}}</span>
                                     <span class="text-lg">آخرین حضور: {{$vacation->attendance}}</span>
@@ -79,8 +78,6 @@
 
                         </div>
 
-
-
                         <form action="{{route('vacations.destroy' , $vacation->id)}}" method="POST">
                             @csrf
                             @method('DELETE')
@@ -91,11 +88,12 @@
                             <input type="submit" value="چاپ برگه مرخصی">
                         </form>
 
-
                     </div>
 
                 </div>
+
                 @endforeach
+
             </div>
 
         </div>

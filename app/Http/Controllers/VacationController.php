@@ -14,12 +14,9 @@ class VacationController extends Controller
 {
     public function show(string $id , Request $request)
     {
-        // can we merge this two querys?
-        $employee = Employee::find($id);
+        $vacations = Vacation::where('employee_id', $id)->orderBy('id', 'DESC')->get();
 
-        $vacations = Employee::find($id)->vacations()->orderBy('id' , 'DESC')->get();
-
-        return view('vacation.history' , compact('vacations' , 'employee'));
+        return view('vacation.history' , compact('vacations'));
     }
 
     public function create(string $id)
