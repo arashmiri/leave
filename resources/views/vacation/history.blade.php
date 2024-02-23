@@ -40,9 +40,9 @@
                             <span class="font-semibold text-lg">تاریخچه مرخصی</span>
                         </a>
                     </div>
-
+                    
                     <div class="flex items-center justify-end space-x-4 space-x-reverse">
-                        <a href="./user.html" class="flex items-center justify-center 
+                        <a href="{{route('employees.show' , $employee->id)}}" class="flex items-center justify-center 
                           bg-gradient-to-r from-red-500 to-red-700 text-white w-28 h-10 rounded-md cursor-pointer">
                             <span>بازگشت</span>
                         </a>
@@ -51,7 +51,7 @@
 
                 @include('errors.message')
 
-                @foreach ($vacations as $vacation)
+                @foreach ($employee->vacations->reverse() as $vacation)
 
                 <div class="my-6 w-full">
 

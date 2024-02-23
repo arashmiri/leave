@@ -14,9 +14,9 @@ class VacationController extends Controller
 {
     public function show(string $id , Request $request)
     {
-        $vacations = Vacation::where('employee_id', $id)->orderBy('id', 'DESC')->get();
+        $employee = Employee::where('id', $id)->first();
 
-        return view('vacation.history' , compact('vacations'));
+        return view('vacation.history' , compact('employee'));
     }
 
     public function create(string $id)
