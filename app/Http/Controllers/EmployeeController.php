@@ -24,14 +24,14 @@ class EmployeeController extends Controller
             if(ctype_digit($request['search']))
             {
                 $employees = DB::table('employees')
-                ->where('personnel_code', 'like', '%' . $request['search'] . '%')
-                ->get();
+                ->where('code', 'like', '%' . $request['search'] . '%')
+                ->paginate(50);
             }
             else
             {
                 $employees = DB::table('employees')
                 ->where('name', 'like', '%' . $request['search'] . '%')
-                ->get();
+                ->paginate(50);
             }
         }
 
