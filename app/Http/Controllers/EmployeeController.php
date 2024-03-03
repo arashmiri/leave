@@ -61,7 +61,7 @@ class EmployeeController extends Controller
         $employee->code = $request['code'];
         $employee->battalion = $request['battalion'];
         $employee->entitlement = $request['entitlement'];
-        $employee->image = 'LF' . $request['personnel_code'] . '.png';
+        $employee->image = 'LF' . $request['code'] . '.png';
 
         $province = Province::where('name', $request['address'])->first();
 
