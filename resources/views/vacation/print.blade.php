@@ -174,7 +174,7 @@
                     <span>سایر: ........... روز</span> -->
                 </div>
                 <div class="flex">
-                    <pre class="w-[348px]">3) تاریخ آخرین حضور نامبرده   {{$lastAttendence[0]->attendance}} </pre>
+                    <pre class="w-[348px]">3) تاریخ آخرین حضور نامبرده  : {{$lastAttendence[0]->attendance ?? '-'}} </pre>
                     <!-- <pre> تاریخ حضور در یگان     /    / 1402</pre> -->
                 </div>
                 <div class="flex justify-end space-x-1 space-x-reverse text-[11px] px-4 py-3">
