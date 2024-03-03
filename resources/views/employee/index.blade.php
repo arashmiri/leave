@@ -104,7 +104,7 @@
         </div>
       </div>
       @endforeach
-      {{ $employees->links() }}
+      {{ $employees->links('vendor.pagination.tailwind') }}
     </div>
 </body>
 
