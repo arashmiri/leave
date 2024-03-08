@@ -27,7 +27,7 @@ class EmployeePolicy
             return true;
         }
 
-        return Response::deny('تنها ادمین مجاز به ویرایش اطلاعات کاربران می باشد');
+        return Response::deny('شما دسترسی لازم برای این صفحه را ندارید');
     }
 
     /**

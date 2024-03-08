@@ -55,7 +55,7 @@ class IncentiveController extends Controller
             $incentive->employee()->attach($employee->id);
         }
 
-        return back()->with('success', 'مرخصی تشویقی با موفقیت برای همه کارمندان ثبت شد.');
+        return back()->with('success', 'مرخصی تشویقی با موفقیت برای همه پایوران ثبت شد');
     }
 
     public function destroy(int $id)
