@@ -112,7 +112,7 @@
   </style>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 scrollbar-thumb-rounded-full scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-100 h-32  overflow-y-scroll">
   <div id="loading" class="flex flex-col items-center space-y-6 justify-center text-2xl fixed z-20 h-screen w-full bg-gray-300/80">
     <!-- <span>درحال بارگذاری...</span> -->
     <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -190,12 +190,12 @@
             </div>
                 <div class="flex flex-wrap space-x-5 space-y-2 space-y-reverse">
                   <div class="w-72">
-                    <span class="text-lg font-bold ml-10">نام و نشان: {{$employee->name}}</span>
+                    <span class="text-base font-bold ml-10">نام و نشان: {{$employee->name}}</span>
                   </div>
-                  <span class="text-lg w-36">درجه: {{$employee->rank}}</span>
-                  <span class="text-lg w-60">شماره کارگزینی: {{$employee->code}}</span>
-                  <p class="text-lg  w-48">استحقاق باقی مانده: {{$employee->entitlement}}</p>
-                  <span class="text-lg w-full">یگان: {{$employee->battalion}}</span>
+                  <span class="text-base w-36">درجه: {{$employee->rank}}</span>
+                  <span class="text-base w-48">شماره کارگزینی: {{$employee->code}}</span>
+                  <p class="text-base w-48">استحقاق باقی مانده: {{$employee->entitlement}}</p>
+                  <span class="text-base">یگان: {{$employee->battalion}}</span>
                 </div>
           </div>
           <div class="flex flex-col space-y-2">

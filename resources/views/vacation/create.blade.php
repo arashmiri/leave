@@ -13,7 +13,7 @@
   @vite('resources/css/app.css')
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 scrollbar-thumb-rounded-full scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-100 h-32  overflow-y-scroll">
   <div>
     <div class="flex items-center justify-between h-20 px-10 shadow-lg">
       <span class="font-medium text-lg">سامانه جامع ثبت مرخصی پایوران</span>
@@ -262,10 +262,16 @@
 
       var distanceInput  = document.getElementById("distance")
       var inputs = document.getElementsByTagName("input")
+      console.log(inputs)
       var extension = []
       for (var i = 0; i < inputs.length; i++) {
         if(inputs[i].type == "checkbox" && inputs[i] != distanceInput) {
-          console.log(inputs[i].nextElementSibling.innerHTML.includes('تمدید'))
+          if({{ $employee->entitlement }} <= 7){
+            showText.innerHTML = 'بدلیل کمتر بودن بودن استحقاق از 7 روز امکان انتخاب مرخصی ویژه وجود ندارد!'
+            inputs[i].disabled = true
+          }
+        }
+        if(inputs[i].type == "checkbox" && inputs[i] != distanceInput) {
           if(inputs[i].nextElementSibling.innerHTML.includes('تمدید') == true){
             extension.push(inputs[i].nextElementSibling.innerHTML)
             if(extension.length > 1){
@@ -320,18 +326,16 @@
             var entitlement
             var holiday
             if('{{ $employee->battalion }}'.includes("شیفت")){
-              // workingDays.innerHTML = 'کسر استحقاق:' + " " + 0 + " " + 'روز'
-              incentive.innerHTML = 'استراحت نگهبانی:' + " " + (incentiveSum + {{ $employee->distance }}) + " " + 'روز'
-              entitlement = document.querySelector('.entitlement').value = 0
-              holiday = document.querySelector('.holiday').value = holidaysCount.length
-              showText.appendChild(title)
-              showText.appendChild(claculateDate)
-              showText.appendChild(holidaysCountShow)
+                incentive.innerHTML = 'استراحت شیفت:' + " " + incentiveSum + " " + 'روز'
+                entitlement = document.querySelector('.entitlement').value = 0
+                holiday = document.querySelector('.holiday').value = holidaysCount.length
+                showText.appendChild(title)
+                showText.appendChild(claculateDate)
+                showText.appendChild(holidaysCountShow)
+                document.getElementById("distance").checked = false
               if({{$employee->useddistance}} < 2){
-                document.getElementById("distance").checked = true
-                distance.innerHTML = "بین راهی:" + " " + {{ $employee->distance }} + " " + "روز"
+                // distance.innerHTML = "بین راهی:" + " " + {{ $employee->distance }} + " " + "روز"
                 document.querySelector('.entitlement').value = 0
-                // workingDays.innerHTML = 'کسر استحقاق:' + " " + 0 + " " + 'روز'
               } else {
                 document.getElementById("distance").checked = false
               }

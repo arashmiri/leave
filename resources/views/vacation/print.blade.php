@@ -10,10 +10,10 @@
     <script src="{{ url('/js/index.js') }}"></script>
   </head>
 
-<body>
+  <body class="scrollbar-thumb-rounded-full scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-100 h-32  overflow-y-scroll">
     <div class="relative max-w-2xl m-auto my-2">
         <div style="opacity: 0.1; z-index: -10; position: absolute; top: 12rem">
-            <img src="{{ url('/images/logo.png') }}" alt="logo" class=" grayscale" />
+        <img src="{{ url('/images/logo.png') }}" alt="logo" class=" grayscale" />
             <!-- <img src="{{ asset('storage/$vacation->employee->image'); }}" alt="logo" class=" grayscale" /> -->
         </div>
         <div class="flex items-end my-1">
@@ -21,7 +21,9 @@
                 <p class="my-6 text-sm">* فرم درخواست مرخصی *</p>
             </div>
             <div>
+            <a href="{{ route('employees.index') }}">
                 <img src="{{ url('/images/logo.png') }}" alt="logo" class="w-20 grayscale" />
+            </a>
             </div>
         </div>
         <div class="border-[1px] border-b-0 border-black">
@@ -120,7 +122,7 @@
             </table>
 
             <div class="space-y-1 text-xs py-1 px-2">
-                <pre>1) یاد شده در طول سال جاری ( {{$vacation->employee->entitlement }} ) روز مرخصی استحقاقی دارد و از ( {{$vacation->employee->useddistance * $vacation->employee->distance}} ) روز مرخصی بین راهی استفاده نموده است.</pre>
+                <pre class="font-bold">1) یاد شده در طول سال جاری ( {{$vacation->employee->entitlement + $vacation->entitlement }} ) روز مرخصی استحقاقی دارد.</pre>
                 <pre>2) اکنون از تاریخ ( <span dir="ltr">{{$vacation->start}}</span> ) تقاضای {{$vacation->entitlement + $vacation->Incentive + $vacation->distance + $vacation->holiday}} روز مرخصی به شرح زیر را دارد:</pre>
                 <div class="flex">
                     <span class="w-44">استحقاقی: {{$vacation->entitlement}} روز</span>
@@ -131,7 +133,7 @@
                 <div class="flex">
                 </div>
                 <div class="flex">
-                <pre class="w-[348px]">3) تاریخ آخرین حضور نامبرده :  <span dir="ltr">{{$lastAttendence[0]->attendance ?? '-'}}</span> </pre>
+                <pre class="w-[348px] font-bold">3) تاریخ آخرین حضور نامبرده :  <span dir="ltr">{{$lastAttendence[0]->attendance ?? '-'}}</span> </pre>
                 </div>
                 <div class="flex justify-end space-x-1 space-x-reverse text-[11px] px-4 py-3">
                     <span class="font-extrabold">رئیس شعبه عملیات نیروی انسانی تیپ:</span>

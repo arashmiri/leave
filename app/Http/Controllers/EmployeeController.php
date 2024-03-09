@@ -61,7 +61,7 @@ class EmployeeController extends Controller
         $employee->code = $request['code'];
         $employee->battalion = $request['battalion'];
         $employee->entitlement = $request['entitlement'];
-        $employee->image = 'LF' . $request['code'] . '.png';
+        $employee->image = 'LF' . $request['code'] . '.jpg';
 
         $province = Province::where('name', $request['address'])->first();
 
@@ -119,10 +119,10 @@ class EmployeeController extends Controller
 
         if($employee)
         {
-            return back()->with('success' , 'کارمند با موفقیت اضافه شد');
+            return back()->with('success' , 'پایور با موفقیت اضافه شد');
         }else
         {
-            return back()->with('fail' , 'هنگام ثبت کارمند مشکلی به وجود آمد' );   
+            return back()->with('fail' , 'هنگام ثبت پایور مشکلی به وجود آمد' );   
         }
     }
 
@@ -167,7 +167,7 @@ class EmployeeController extends Controller
          $employee->code = $request['code'];
          $employee->battalion = $request['battalion'];
          $employee->entitlement = $request['entitlement'];
-         $employee->image = 'LF' . $request['personnel_code'] . '.png';
+         $employee->image = 'LF' . $request['code'] . '.jpg';
          $employee->address = $request['address'];
 
          $employee->useddistance = $request['useddistance'] ;
@@ -245,9 +245,9 @@ class EmployeeController extends Controller
 
         if($employee)
         {
-            return redirect()->route('employees.index')->with('success' , 'کاربر با موفقیت حذف شد');
+            return redirect()->route('employees.index')->with('success' , 'پایور با موفقیت حذف شد');
         }else {
-            return back()->with('fail' , 'هنگام حذف پرسنل مشکلی پیش امد');
+            return back()->with('fail' , 'هنگام حذف پایور مشکلی پیش امد');
         }
     }
 }

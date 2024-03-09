@@ -10,7 +10,7 @@
   @vite('resources/css/app.css')
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 scrollbar-thumb-rounded-full scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-gray-100 h-32  overflow-y-scroll">
   <div>
     <div class="flex items-center justify-between h-20 px-10 shadow-lg">
       <span class="font-medium text-lg">سامانه جامع ثبت مرخصی پایوران</span>
