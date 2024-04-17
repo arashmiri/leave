@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
     <div class="flex items-center justify-center relative w-16 h-16 ">
         <img src="{{ asset("storage/"  .   $vacation->employee->image); }}" alt="logo" class="w-full h-full rounded-full p-1" />
         <span class="absolute top-0 border-[3px] border-green-600 w-16 h-16 rounded-full"></span>
