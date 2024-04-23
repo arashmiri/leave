@@ -21,11 +21,11 @@ class StatisticController extends Controller
 
     public function attendance(Request $request)
     {   
-        $vacations = Vacation::with('personnel')
+        $vacations = Vacation::with('employee')
         ->where('attendance', '=', $request->attendance)
         ->get()
         ->map(function ($vacation) {
-            return $vacation->personnel->name;
+            return $vacation->employee->name;
         });
 
         return view('statistic.index', compact('vacations'));
@@ -33,11 +33,11 @@ class StatisticController extends Controller
 
     public function ends(Request $request)
     {   
-        $vacations = Vacation::with('personnel')
+        $vacations = Vacation::with('employee')
         ->whereDate('end', '>=', $request->endDate)
         ->get()
         ->map(function ($vacation) {
-            return $vacation->personnel->name;
+            return $vacation->employee->name;
         });
 
         return view('statistic.index', compact('vacations'));
