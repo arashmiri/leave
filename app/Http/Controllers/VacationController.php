@@ -38,6 +38,7 @@ class VacationController extends Controller
             return redirect()->back()-with('fail' , 'مقدار استحقاق وارد شده از استحقاق مانده بیشتر است');
         }
 
+        // maybe we can use this syntax $employee->vacations>create();
         $vacation = new Vacation();
 
         //check dates not smaller than eachother
@@ -45,6 +46,8 @@ class VacationController extends Controller
         $vacation->end = $request->end;
         $vacation->attendance = $request->attendance;
 
+
+        // wtf is holiday ?!
         if(isset($request->holiday))
         {
             $vacation->holiday = $request->holiday;
@@ -62,9 +65,9 @@ class VacationController extends Controller
             //dd($request->encouragement);
             foreach ($request->incentive as $incentive) 
             {
-                $incentive = Incentive::find($incentive);
+                $incentive = Incentive::find($incentive); // write a senario for fail!
 
-                $vacation->incentive = $incentive->days + $vacation->Incentive; 
+                $vacation->incentive += $incentive->days ; 
                 $vacation->IncentiveDescription	 = $incentive->title . "+" . $vacation->IncentiveDescription; 
 
                 $employee->incentives()->detach($incentive);
