@@ -46,23 +46,13 @@ class VacationController extends Controller
         $vacation->end = $request->end;
         $vacation->attendance = $request->attendance;
 
-
-        // wtf is holiday ?!
-        if(isset($request->holiday))
-        {
-            $vacation->holiday = $request->holiday;
-        }
-
         $employee->entitlement = $employee->entitlement - $request->entitlement ;
 
         $vacation->entitlement = $request->entitlement;
 
-        //dd($request);
-
         if(isset($request->incentive))
         {
 
-            //dd($request->encouragement);
             foreach ($request->incentive as $incentive) 
             {
                 $incentive = Incentive::find($incentive); // write a senario for fail!
@@ -77,10 +67,10 @@ class VacationController extends Controller
        
         //check used distance 
 
-        if($employee->useddistance < 2)
+        if(isset($request->distance) && $employee->useddistance < 2)
         {
             $vacation->distance = $employee->distance;
-            $employee->useddistance = $employee->useddistance + 1 ;
+            $employee->useddistance +=  1 ;
         }
 
 
@@ -91,11 +81,6 @@ class VacationController extends Controller
 
         return redirect()->route('vacation.history', ['id' => $request->employee_id]);
     }
-
-    // public function showPrint()
-    // {
-    //     return view('vacation.print');
-    // }
 
     public function print(int $id)
     {

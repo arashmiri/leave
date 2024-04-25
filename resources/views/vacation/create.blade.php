@@ -47,7 +47,11 @@
             <span>درجه: {{ $employee->rank }} </span>
             <span> شماره کارگزینی :  {{ $employee->code }}</span>
             <span> استحقاق باقی مانده :  {{ $employee->entitlement }}</span>
-            <span>این پرسنل تا این لحظه ( {{ $employee->useddistance }} )  مرتبه از مرخصی توراهی استفاده کرده</span>
+            @if ($employee->useddistance < 2)
+              <span>این پرسنل تا این لحظه ( {{ $employee->useddistance }} )  مرتبه از مرخصی توراهی استفاده کرده</span>
+            @else
+              <span>تا کنون 2 مرتبه از مرخصی توراهی استفاده شده , گزینه اعمال غیر فعال است</span>
+            @endif
         </div>
           <div class="flex flex-col my-6">
             <div class="flex space-x-6 space-x-reverse" style="margin-bottom:30px">
@@ -111,9 +115,12 @@
                 <input type="checkbox" id="" name="incentive[]" value="{{$incentive->id}}">
                 <label>{{$incentive->title}} {{$incentive->days}} روز</label><br>
               @endforeach
-
-
-            </div>
+            </div> <br>
+            
+            @if ($employee->useddistance < 2)
+            <label> اعمال {{ $employee->distance }} روز مرخصی توراهی </label><br>
+            <input type="checkbox" id="" name="distance" value="{{$employee->distance}}"><br>
+            @endif
 
             <input type="hidden" id="custId" name="employee_id" value="{{$employee->id}}">
 
