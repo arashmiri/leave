@@ -77,13 +77,13 @@
                             </div>
 
                         </div>
-
-                        <form action="{{route('vacations.destroy' , $vacation->id)}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <input type="submit" value="حذف مرخصی">
-                        </form>
-
+                        @if(auth()->user()->isAdministrator())
+                            <form action="{{route('vacations.destroy' , $vacation->id)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="حذف مرخصی">
+                            </form>
+                        @endif
                         <form action="{{route('vacations.print' , $vacation->id)}}" method="GET">
                             <input type="submit" value="چاپ برگه مرخصی">
                         </form>

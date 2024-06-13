@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
-use App\Models\Personnel;
 use App\Models\Vacation;
-use App\Models\Encouragement;
 use App\Models\Incentive;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class VacationController extends Controller
 {
@@ -100,6 +99,7 @@ class VacationController extends Controller
     public function destroy(string $id)
     {
 
+        $this->authorize('delete');
 
         $vacation = Vacation::find($id);
 

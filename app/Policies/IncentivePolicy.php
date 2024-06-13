@@ -2,12 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Employee;
-use App\Models\Personnel;
+use App\Models\Incentive;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class EmployeePolicy
+class IncentivePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -20,14 +19,9 @@ class EmployeePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user)
+    public function view(User $user, Incentive $incentive): bool
     {
-        if($user->isAdministrator())
-        {
-            return true;
-        }
-
-        return Response::deny('تنها ادمین مجاز به ویرایش اطلاعات کاربران می باشد');
+        //
     }
 
     /**
@@ -41,25 +35,25 @@ class EmployeePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user): Response
-    {
-        return $user->isAdministrator()
-        ? Response::allow()
-        : Response::deny('تنها ادمین مجاز به ویرایش اطلاعات کاربر است');
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Personnel $personnel): bool
+    public function update(User $user, Incentive $incentive): bool
     {
         //
     }
 
     /**
+     * Determine whether the user can delete the model.
+     */
+    public function delete(User $user): bool
+    {
+        return $user->isAdministrator()
+        ? Response::allow()
+        : Response::deny();
+    }
+
+    /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Personnel $personnel): bool
+    public function restore(User $user, Incentive $incentive): bool
     {
         //
     }
@@ -67,7 +61,7 @@ class EmployeePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Personnel $personnel): bool
+    public function forceDelete(User $user, Incentive $incentive): bool
     {
         //
     }

@@ -60,6 +60,8 @@ class IncentiveController extends Controller
 
     public function destroy(int $id)
     {
+
+        $this->authorize('delete');
         // Detach personnel before deleting the encouragement
         $encouragement = Incentive::find($id);
 
